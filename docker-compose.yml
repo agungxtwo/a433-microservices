@@ -1,0 +1,24 @@
+version: "3.7"
+
+services:
+# service container database dengan menggunakan mongo
+  item-db:
+    image: mongo:3
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - app-db:/data/db
+# service item-app menggunakan image hasil build
+  item-app:
+    image: agungxtwo/item-app:v1
+    depends_on:
+      - item-db
+    restart: always
+    ports:
+      - 80:8080
+# volume untuk app-db
+volumes:
+   app-db:
+
+
